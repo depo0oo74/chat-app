@@ -1,0 +1,50 @@
+<%- include ('layouts/header') %>
+
+<!-- start friends -->
+
+<input type="hidden" id="friendId" name="friendId" value="<%= currentUser._id %>">
+<input type="hidden" id="friendUsername" name="friendUsername" value="<%= currentUser.username %>">
+<input type="hidden" id="friendImage" name="friendImage" value="<%= currentUser.image %>">
+<input type="hidden" id="friendDateOfJoin" name="friendDateOfJoin" value="<%= currentUser.dateOfJoin %>">
+<input type="hidden" id="myId" name="myId" value="<%= myAccount._id %>">
+<input type="hidden" id="myUsername" name="myUsername" value="<%= myAccount.username %>">
+<input type="hidden" id="myImage" name="myImage" value="<%= myAccount.image %>">
+<input type="hidden" id="myDateOfJoin" name="myDateOfJoin" value="<%= myAccount.dateOfJoin %>">
+
+<section class="friends">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <% let ourChatId = '' %> 
+                
+                <% if (friends.length > 0) { %>
+                    <% const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %> 
+                    <% for (let i = 0 ; i < friends.length ; i++) { %> 
+                        <% ourChatId =  myAccount.friends.find(x => x.id === friends[i].id).chatId %>
+                        <div class="friend-card">
+                            <img src="/<%= friends[i].image %>" alt="">
+                            <div class="personal-info">
+                                <h1>
+                                    <a href="/profile/id=<%= friends[i].id %>" class="btn"><%= friends[i].name %></a>
+                                </h1>
+                                <p>Joined at <b><%= friends[i].dateOfJoin.getDate() %> <%= months[friends[i].dateOfJoin.getMonth()] %>, <%= friends[i].dateOfJoin.getFullYear() %></b></p>
+                                <div>
+                                    <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success show"> Chat </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %> 
+                <% } else { %> 
+                    <p class="no-friends">You don't have friends :(</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end friends -->
+
+<%- include ('layouts/footer') %>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets.js"></script>

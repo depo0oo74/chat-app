@@ -1,0 +1,90 @@
+<%- include ('layouts/header') %>
+
+
+
+<!-- start profile -->
+
+<section class="profile">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <img src="/<%= currentUser.image %>" alt="">
+                <input type="hidden" id="friendId" name="friendId" value="<%= currentUser._id %>">
+                <input type="hidden" id="friendUsername" name="friendUsername" value="<%= currentUser.username %>">
+                <input type="hidden" id="friendImage" name="friendImage" value="<%= currentUser.image %>">
+                <input type="hidden" id="friendDateOfJoin" name="friendDateOfJoin" value="<%= currentUser.dateOfJoin %>">
+                <input type="hidden" id="myId" name="myId" value="<%= myAccount._id %>">
+                <input type="hidden" id="myUsername" name="myUsername" value="<%= myAccount.username %>">
+                <input type="hidden" id="myImage" name="myImage" value="<%= myAccount.image %>">
+                <input type="hidden" id="myDateOfJoin" name="myDateOfJoin" value="<%= myAccount.dateOfJoin %>">
+                <% if (!isMyProfile) { %>
+                    <div>
+                        <% let ourChatId = '' %> 
+                        <% if (myAccount.friends.length > 0) { %>
+                            <% ourChatId =  myAccount.friends.find(x => x.id === currentUser.id).chatId %>
+                        <% } %> 
+                        <% if (isFriends) { %> 
+                            <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success show"> Chat </a> 
+                            <input type="submit" value="Delete friend" class="btn btn-danger" id="deleteBtn">
+                            <input type="hidden" value="Accept request" class="btn btn-success" id="acceptBtn">
+                            <input type="hidden" value="Reject request" class="btn btn-danger" id="rejectBtn">
+                            <input type="hidden" value="Cancel request" class="btn btn-secondary" id="cancelBtn">
+                            <input type="hidden" class="btn btn-info" value="Add firend" id="addBtn">
+                        <% } else if (isFriendRequest) { %> 
+                            <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success hidden"> Chat </a>
+                            <input type="hidden" value="Delete friend" class="btn btn-danger" id="deleteBtn">
+                            <input type="submit" value="Accept request" class="btn btn-success" id="acceptBtn">
+                            <input type="submit" value="Reject request" class="btn btn-danger" id="rejectBtn">
+                            <input type="hidden" value="Cancel request" class="btn btn-secondary" id="cancelBtn">
+                            <input type="hidden" class="btn btn-info" value="Add firend" id="addBtn">
+                        <% } else if (isRequestSent) { %> 
+                            <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success hidden"> Chat </a>
+                            <input type="hidden" value="Delete friend" class="btn btn-danger" id="deleteBtn">
+                            <input type="hidden" value="Accept request" class="btn btn-success" id="acceptBtn">
+                            <input type="hidden" value="Reject request" class="btn btn-danger" id="rejectBtn">
+                            <input type="submit" value="Cancel request" class="btn btn-secondary" id="cancelBtn">
+                            <input type="hidden" class="btn btn-info" value="Add firend" id="addBtn">
+                        <% } else { %> 
+                            <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success hidden"> Chat </a>
+                            <input type="hidden" value="Delete friend" class="btn btn-danger" id="deleteBtn">
+                            <input type="hidden" value="Accept request" class="btn btn-success" id="acceptBtn">
+                            <input type="hidden" value="Reject request" class="btn btn-danger" id="rejectBtn">
+                            <input type="hidden" value="Cancel request" class="btn btn-secondary" id="cancelBtn">
+                            <input type="submit" class="btn btn-info" value="Add firend" id="addBtn">
+                        <% } %>
+                    </div>
+                <% } else { %>
+                <form method="POST" action="/profile/changePic" enctype="multipart/form-data">
+                    <label style="cursor: pointer;" for="change-photo">choose new photo ...</label>
+                    <input style="opacity: 0; position: absolute; z-index: -1000;" type="file" name="newPhoto" class="form-control" id="change-photo" required> 
+                    <button class="btn btn-primary" disabled>change profile photo</button>
+                </form>
+                <% } %> 
+                <h2 style="margin-top: 50px;">
+                    <%= currentUser.username %>
+                    <span id="status_<%= currentUser.id %>" class="<%= currentUser.status ? 'online' : 'offline' %>"><i class="fas fa-circle"></i></span>
+                </h2>
+                <h3>Friends : <span id="friendNum"><%= currentUser.friends.length %></span></h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- end profile -->
+
+<%- include ('layouts/footer') %> 
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets.js"></script>
+
+<script>
+
+$('input[name = "newPhoto"]').on('change', function () {
+    if ( $(this).val() ) {
+        $(this).parent().children('button').prop('disabled', false)
+    }
+})
+
+
+</script>

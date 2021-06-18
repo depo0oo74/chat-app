@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageName %></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- start nav -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="/profile/id=<%= isAuth %>">Chat App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+            <ul class="navbar-nav ml-auto">
+                <% if (isAuth) { %> 
+                    <div class="dropdown notification-box">
+                        <button class="btn dropdown-toggle" type="button" id="notificationMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell"></i> <span class="red-mark"></span>
+                        </button>
+                        <div id="dropdown-menu" class="dropdown-menu" aria-labelledby="notificationMenu">
+                            <% if (myAccount.notifications.length > 0) { %> 
+                                <% for (let i = Number(myAccount.notifications.length) - 1 ; i >= 0 ; i--) { %> 
+                                    <% if (myAccount.notifications[i].typeOfNotification === 'friend request' ) { %>
+                                        <a class="dropdown-item" href="/profile/id=<%= myAccount.notifications[i].id %>">
+                                            <img src="/<%= myAccount.notifications[i].image %>" alt="">
+                                            <%= myAccount.notifications[i].name %> send you a friend request
+                                        </a>
+                                    <% } else if (myAccount.notifications[i].typeOfNotification === 'accept request') { %> 
+                                        <a class="dropdown-item" href="/profile/id=<%= myAccount.notifications[i].id %>">
+                                            <img src="/<%= myAccount.notifications[i].image %>" alt="">
+                                            <%= myAccount.notifications[i].name %> accepted your friend request
+                                        </a>
+                                    <% } %> 
+                                <% } %> 
+                            <% } else { %>
+                                <a class="btn note-message">there's no notifications</a>
+                            <% } %> 
+                        </div>
+                    </div>
+                    <li class="nav-item <%= pageName === 'profile' ? 'active' : '' %>">
+                        <a class="nav-link" href="/profile/id=<%= isAuth %>">profile</a>
+                    </li>
+                    <li class="nav-item <%= pageName === 'friends' ? 'active' : '' %>">
+                        <a class="nav-link" href="/friends/id=<%= isAuth %>">Friends</a>
+                    </li>
+                    <li>
+                        <form method="POST" action="/logout">
+                            <input type="hidden" name="userId" value="<%= isAuth %>">
+                            <button type="submit" class="btn" style="color: white; background: red;">Logout</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+    <!-- end nav -->
