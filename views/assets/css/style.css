@@ -222,7 +222,7 @@ nav ul li {
     overflow-y: auto;
     padding: 0 10px;
 }
-/* .chat-inner .chat-inner::-webkit-scrollbar {   
+.chat-inner .chat-inner::-webkit-scrollbar {   
     width: 5px;
 }
 .chat-inner .chat-inner::-webkit-scrollbar-track {
@@ -231,7 +231,7 @@ nav ul li {
 .chat-inner .chat-inner::-webkit-scrollbar-thumb {
     background-color: var(--main-color);
     outline: 1px solid slategrey;
-} */
+}
 .sender-receiver p {
     font-weight: bold;
     font-size: 18px;
