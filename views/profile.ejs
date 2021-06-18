@@ -20,10 +20,11 @@
                 <% if (!isMyProfile) { %>
                     <div>
                         <% let ourChatId = '' %> 
-                        <% if (myAccount.friends.length > 0) { %>
-                            <% ourChatId =  myAccount.friends.find(x => x.id === currentUser.id).chatId %>
-                        <% } %> 
+                        
                         <% if (isFriends) { %> 
+                            <% if (myAccount.friends.length > 0) { %>
+                                <% ourChatId =  myAccount.friends.find(x => x.id === currentUser.id).chatId %>
+                            <% } %> 
                             <a href="/chat/id=<%= ourChatId %>" id="chatBtn" class="btn btn-success show"> Chat </a> 
                             <input type="submit" value="Delete friend" class="btn btn-danger" id="deleteBtn">
                             <input type="hidden" value="Accept request" class="btn btn-success" id="acceptBtn">

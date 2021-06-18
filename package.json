@@ -4,14 +4,11 @@
   "description": "chat app built by nodejs & express",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ahmed eldeeb",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.7"
-  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
@@ -24,5 +21,8 @@
     "mongoose": "^5.12.14",
     "multer": "^1.4.2",
     "socket.io": "^4.1.2"
+  } ,
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
