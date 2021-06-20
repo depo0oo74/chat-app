@@ -1,11 +1,13 @@
-const express = require('express')
 const router = require('express').Router()
 const signupController = require('../controllers/signup-controller')
 const check = require('express-validator').check
 const gardController = require('../controllers/gard-controller')
 const multer = require('multer')
-router.get('/signup', gardController.notAuth , signupController.getSignup)
 
+
+
+
+router.get('/signup', gardController.notAuth , signupController.getSignup)
 router.post(
     '/signup', 
     multer({
